@@ -7,6 +7,14 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 
+/**
+ * @brief Entity class representing message processing errors.
+ * Maps to the "message_processing_errors" table in the database.
+ * Contains details about errors encountered during message processing.
+ * Includes fields for event type, error description, message data, timestamp, and entity type.
+ * Automatically sets the error timestamp on creation if not provided.
+ */
+
 @Entity
 @Getter @Setter
 @NoArgsConstructor @AllArgsConstructor

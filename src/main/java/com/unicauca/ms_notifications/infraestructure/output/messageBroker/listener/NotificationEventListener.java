@@ -19,6 +19,12 @@ import org.springframework.messaging.handler.annotation.Header;
 import org.springframework.stereotype.Component;
 import java.util.Objects;
 
+/**
+ * @brief Listener to handle notification events from RabbitMQ.
+ * It processes events related to invoice due reminders.
+ * It extends AbstractMessageListener to leverage common message handling logic.
+ */
+
 @Slf4j
 @Component
 @RequiredArgsConstructor
@@ -34,6 +40,12 @@ public class NotificationEventListener extends AbstractMessageListener<EventDto<
         this.messageErrorHandlingPort = messageErrorHandlingPortImpl;
     }
 
+    /**
+     * Listens to the notifications queue and processes incoming notification events.
+     * @param event The notification event received.
+     * @param channel The RabbitMQ channel.
+     * @param deliveryTag The delivery tag for message acknowledgment.
+     */
     @RabbitListener(queues = RabbitNotificationsConfig.NOTIFICATIONS_QUEUE)
     public void listenToNotificationQueue(
             EventDto<InvoiceDueReminderEventDto> event,
@@ -45,6 +57,11 @@ public class NotificationEventListener extends AbstractMessageListener<EventDto<
         handleMessage(event, channel, deliveryTag);
     }
 
+    /**
+     * @brief Processes the notification event based on its type.
+     * @param event The notification event to process.
+     * @throws Exception if any error occurs during processing.
+     */
     @Override
     protected void processEvent(EventDto<InvoiceDueReminderEventDto> event) {
         String eventType = event.getType();
@@ -73,6 +90,11 @@ public class NotificationEventListener extends AbstractMessageListener<EventDto<
         }
     }
 
+    /**
+     * @brief Validates the structure and content of the notification event.
+     * @param event The notification event to validate.
+     * @throws ValidationException if validation fails.
+     */
     @Override
     protected void validateEvent(EventDto<InvoiceDueReminderEventDto> event) throws ValidationException {
         if (event == null) {
@@ -98,16 +120,30 @@ public class NotificationEventListener extends AbstractMessageListener<EventDto<
         // Si todo está bien, el método simplemente termina. No se lanza ninguna excepción.
     }
 
+    /**
+     * @brief Returns the entity type for this listener.
+     * @return The entity type as a string.
+     */
     @Override
     protected String getEntityType() {
         return "Notification.InvoiceDueReminder";
     }
 
+    /**
+     * @brief Extracts the event type from the notification event.
+     * @param event The notification event.
+     */
     @Override
     protected String extractEventType(EventDto<InvoiceDueReminderEventDto> event) {
         return event != null ? event.getType() : "unknown";
     }
 
+    /**
+     * @brief Converts the notification event to a JSON string for logging or error handling.
+     * @param event The notification event to convert.
+     * @return The JSON representation of the event.
+     * @throws Exception if conversion fails.
+     */
     @Override
     protected String convertEventToJson(EventDto<InvoiceDueReminderEventDto> event) {
         if (event == null || event.getData() == null) {
