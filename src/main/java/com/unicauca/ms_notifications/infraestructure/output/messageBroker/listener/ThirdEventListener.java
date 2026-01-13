@@ -20,6 +20,12 @@ import jakarta.annotation.PostConstruct;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 
+/**
+ * @brief Listener to handle third party events from RabbitMQ.
+ * It processes events related to third party updates.
+ * It extends AbstractMessageListener to leverage common message handling logic.
+ */
+
 @Component
 @RequiredArgsConstructor
 @Slf4j
@@ -34,6 +40,12 @@ public class ThirdEventListener extends AbstractMessageListener<EventDtoThird<Th
         this.messageErrorHandlingPort = messageErrorHandlingPortImpl;
     }
 
+    /**
+     * @brief Listens to the thirds queue and processes incoming third party events.
+     * @param event The third party event received.
+     * @param channel The RabbitMQ channel.
+     * @param deliveryTag The delivery tag for message acknowledgment.
+     */
     @RabbitListener(queues = RabbitThirdsEventsConfig.THIRD_UPDATED_QUEUE, containerFactory = "rabbitListenerContainerFactory")
     public void listenToThirdsQueue(
             EventDtoThird<ThirdUpdatedEventDto, String> event,
@@ -46,6 +58,11 @@ public class ThirdEventListener extends AbstractMessageListener<EventDtoThird<Th
         handleMessage(event, channel, deliveryTag);
     }
 
+    /**
+     * @brief Processes the third party event based on its type.
+     * @param event The third party event to process.
+     * @throws Exception if any error occurs during processing.
+     */
     @Override
     protected void processEvent(EventDtoThird<ThirdUpdatedEventDto, String> event) {
         ThirdUpdatedEventDto thirdUpdatedDTO = event.getData();
@@ -78,6 +95,11 @@ public class ThirdEventListener extends AbstractMessageListener<EventDtoThird<Th
         }
     }
 
+    /**
+     * @brief Validates the structure and content of the third party event.
+     * @param event The third party event to validate.
+     * @throws ValidationException if validation fails.
+     */
     @Override
     protected void validateEvent(EventDtoThird<ThirdUpdatedEventDto, String> event) throws ValidationException {
         if (event == null) {
@@ -109,11 +131,20 @@ public class ThirdEventListener extends AbstractMessageListener<EventDtoThird<Th
         // Si todo está bien, el método termina sin lanzar una excepción.
     }
 
+    /**
+     * @brief Returns the entity type for this listener.
+     * @return The entity type as a string.
+     */
     @Override
     protected String getEntityType() {
         return "ThirdParty.Sync";
     }
 
+    /**
+     * @brief Extracts the event type from the third party event.
+     * @param event The third party event.
+     * @return The event type as a string.
+     */
     @Override
     protected String extractEventType(EventDtoThird<ThirdUpdatedEventDto, String> event) {
         return event != null ? event.getType() : "unknown";

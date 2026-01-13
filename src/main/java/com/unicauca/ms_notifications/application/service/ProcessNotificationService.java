@@ -22,6 +22,13 @@ public class ProcessNotificationService implements IProcessNotificationUseCase {
     private final TemplateEngine templateEngine;
     private final IThirdProviderPort thirdProviderPort;
 
+    /**
+     * @brief Processes an invoice due reminder event.
+     * Retrieves third party information, generates email content using a template,
+     * and sends the notification email.
+     * @param event The invoice due reminder event data.
+     * @throws RuntimeException if the third party is not found.
+     */
     @Override
     public void processInvoiceDueReminder(InvoiceDueReminderEventDto event) {
         log.info("Procesando recordatorio para el tercero con ID: {}", event.getThirdPartyId());

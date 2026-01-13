@@ -9,13 +9,26 @@ import com.unicauca.ms_notifications.infraestructure.output.jpa.repository.IMess
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 
-@Component // Le damos un nombre para evitar ambigüedad si es necesario
+/**
+ * Adapter to handle message processing errors by saving them to the database.
+ * Implements the IMessageErrorHandlingPort interface.
+ * 
+ */
+
+@Component 
 @RequiredArgsConstructor
 @Slf4j
 public class MessageErrorHandlingAdapter implements IMessageErrorHandlingPort {
 
     private final IMessageProcessingErrorRepository errorRepository;
 
+    /**
+     * @brief Saves a processing error to the database.
+     * @param eventType The type of the event that caused the error.
+     * @param errorDescription A description of the erro, including exception details.
+     * @param messageData The data of the message that caused the error.
+     * @param entityType The type of entity involved in the error.
+     */
     @Override
     public void saveProcessingError(String eventType, String errorDescription, String messageData, String entityType) {
         try {

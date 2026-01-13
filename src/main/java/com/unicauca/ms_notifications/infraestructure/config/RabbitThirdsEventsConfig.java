@@ -7,6 +7,12 @@ import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.context.annotation.Profile;
 
+/**
+ * @brief Configuration class for RabbitMQ thirds events.
+ * Defines exchanges, queues, and bindings for third updated events.
+ * This configuration is excluded from the 'test' profile.
+ */
+
 @Configuration
 @Profile("!test")
 public class RabbitThirdsEventsConfig {

@@ -1,17 +1,17 @@
 package com.unicauca.ms_notifications.domain.ports;
 
 /**
- * Puerto de salida para el manejo de errores en el procesamiento de mensajes.
- * Proporciona un mecanismo para persistir información de errores cuando
- * las operaciones de procesamiento de mensajes fallan, permitiendo auditoría y depuración.
+ * Output port interface for message error handling in processing of messages.
+ * Provides a mechanism to persist error information when
+ * message processing operations fail, allowing for auditing and debugging.
  */
 public interface IMessageErrorHandlingPort {
     /**
-     * Guarda la información de un error cuando falla el procesamiento de un mensaje.
-     * @param eventType Tipo de evento que falló (puede ser null).
-     * @param errorDescription Descripción del error que ocurrió.
-     * @param messageData Datos del mensaje en formato JSON.
-     * @param entityType Tipo de entidad que se estaba procesando.
+     * Saves error information when message processing fails.
+     * @param eventType The type of event that failed (can be null).
+     * @param errorDescription Description of the error that occurred.
+     * @param messageData Message data in JSON format.
+     * @param entityType The type of entity being processed.
      */
     void saveProcessingError(String eventType, String errorDescription, String messageData, String entityType);
 }

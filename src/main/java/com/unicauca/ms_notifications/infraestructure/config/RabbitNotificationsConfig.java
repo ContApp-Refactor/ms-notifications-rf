@@ -11,6 +11,12 @@ import org.springframework.context.annotation.Profile;
 
 import lombok.extern.slf4j.Slf4j;
 
+/**
+ * @brief Configuration class for RabbitMQ notifications.
+ * Defines exchanges, queues, and bindings for notification messages.
+ * This configuration is excluded from the 'test' profile.
+ */
+
 @Configuration
 @Slf4j
 @Profile("!test")

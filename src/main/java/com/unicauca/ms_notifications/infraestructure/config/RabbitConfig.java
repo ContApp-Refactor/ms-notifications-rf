@@ -12,6 +12,12 @@ import org.springframework.context.annotation.Configuration;
 
 import lombok.extern.slf4j.Slf4j;
 
+/**
+ * @brief Configuration class for RabbitMQ messaging.
+ * Sets up message converters and RabbitTemplate with callbacks for message delivery.
+ * Configures listener container factory for message listeners.
+ */
+
 @Configuration
 @Slf4j
 public class RabbitConfig {

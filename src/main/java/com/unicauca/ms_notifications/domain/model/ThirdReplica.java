@@ -5,6 +5,11 @@ import lombok.Getter;
 import lombok.RequiredArgsConstructor;
 import lombok.Setter;
 
+/**
+ * Model that represents a third party replica.
+ * This class contains information about a third party, such as their ID, full name, and email.
+ */
+
 @Getter
 @Setter
 @RequiredArgsConstructor
