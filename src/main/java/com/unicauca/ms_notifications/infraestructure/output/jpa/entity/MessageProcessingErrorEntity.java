@@ -1,6 +1,9 @@
 package com.unicauca.ms_notifications.infraestructure.output.jpa.entity;
 
 import java.time.Instant;
+
+import org.hibernate.annotations.TenantId;
+
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
@@ -46,4 +49,7 @@ public class MessageProcessingErrorEntity {
             errorTimestamp = Instant.now();
         }
     }
+
+    @TenantId
+    String tenantId;
 }

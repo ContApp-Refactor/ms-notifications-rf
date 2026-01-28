@@ -1,5 +1,6 @@
 package com.unicauca.ms_notifications.infraestructure.output.messageBroker.listener;
 
+import org.springframework.amqp.core.Message;
 import org.springframework.amqp.rabbit.annotation.RabbitListener;
 import org.springframework.amqp.support.AmqpHeaders;
 import org.springframework.messaging.handler.annotation.Header;
@@ -48,6 +49,7 @@ public class ThirdEventListener extends AbstractMessageListener<EventDtoThird<Th
      */
     @RabbitListener(queues = RabbitThirdsEventsConfig.THIRD_UPDATED_QUEUE, containerFactory = "rabbitListenerContainerFactory")
     public void listenToThirdsQueue(
+            Message message,
             EventDtoThird<ThirdUpdatedEventDto, String> event,
             Channel channel,
             @Header(AmqpHeaders.DELIVERY_TAG) long deliveryTag) {
