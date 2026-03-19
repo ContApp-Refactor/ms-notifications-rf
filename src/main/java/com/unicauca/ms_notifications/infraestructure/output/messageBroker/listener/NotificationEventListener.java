@@ -12,6 +12,8 @@ import com.unicauca.ms_notifications.infraestructure.output.messageBroker.utils.
 import jakarta.annotation.PostConstruct;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+
+import org.springframework.amqp.core.Message;
 import org.springframework.amqp.rabbit.annotation.RabbitListener;
 import org.springframework.amqp.support.AmqpHeaders;
 import org.springframework.beans.factory.annotation.Qualifier;
@@ -48,6 +50,7 @@ public class NotificationEventListener extends AbstractMessageListener<EventDto<
      */
     @RabbitListener(queues = RabbitNotificationsConfig.NOTIFICATIONS_QUEUE)
     public void listenToNotificationQueue(
+            Message message,
             EventDto<InvoiceDueReminderEventDto> event,
             Channel channel,
             @Header(AmqpHeaders.DELIVERY_TAG) long deliveryTag) {
@@ -117,6 +120,24 @@ public class NotificationEventListener extends AbstractMessageListener<EventDto<
         if (data.getInvoiceDetails().stream().anyMatch(Objects::isNull)) {
             throw new ValidationException("Validation failed: invoiceDetails list contains null items");
         }
+        //Validar cada InvoiceDetailEventDto
+        data.getInvoiceDetails().forEach(detail -> {
+            if (detail.getInvoiceId() == null) {
+                throw new ValidationException("Validation failed: invoiceId is null in invoiceDetails");
+            }
+            if (detail.getInvoiceCode() == null) {
+                throw new ValidationException("Validation failed: invoiceCode is null in invoiceDetails");
+            }
+            if (detail.getExpirationDate() == null) {
+                throw new ValidationException("Validation failed: expirationDate is null in invoiceDetails");
+            }
+            if (detail.getTotalAmount() == null) {
+                throw new ValidationException("Validation failed: totalAmount is null in invoiceDetails");
+            }
+            if (detail.getPendingValue() == null) {
+                throw new ValidationException("Validation failed: pendingValue is null in invoiceDetails");
+            }
+        });
         // Si todo está bien, el método simplemente termina. No se lanza ninguna excepción.
     }
 
