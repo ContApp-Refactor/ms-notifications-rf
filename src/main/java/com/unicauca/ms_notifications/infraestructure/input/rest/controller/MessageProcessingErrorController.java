@@ -23,6 +23,22 @@ public class MessageProcessingErrorController {
     private final IMessageProcessingErrorCommandPort commandUseCase;
     private final IMessageProcessingErrorRestMapper restMapper;
 
+
+    @GetMapping("/{id}")
+    public ResponseEntity<ApiResponse<MessageProcessingErrorResponse>> findById(Long id) {
+        MessageProcessingError error = queryUseCase.findById(id);
+
+        if (error == null) {
+            return ResponseEntity.ok(
+                    ApiResponse.successEmpty("MessageProcessingError with ID " + id + " not found.",
+                            "NO_CONTENT"));
+        }
+
+        MessageProcessingErrorResponse responseDto = restMapper.toResponse(error);
+        return ResponseEntity.ok(
+                ApiResponse.success(responseDto, "MessageProcessingError with ID " + id + " found successfully."));
+    }
+
     /**
      * @brief Retrieves the most recent message processing error
      * @return Response with the latest message processing error or not found

@@ -26,5 +26,11 @@ public class MessageProcessingErrorService implements IMessageProcessingErrorCom
     public void deleteAll() {
         persistencePort.deleteAll();
     }
+
+    @Override
+    public MessageProcessingError findById(Long id) {
+        return persistencePort.findById(id).orElseThrow(() -> 
+            new MessageProcessingErrorNotFoundException("MessageProcessingError with ID " + id + " not found"));
+    }
     
 }

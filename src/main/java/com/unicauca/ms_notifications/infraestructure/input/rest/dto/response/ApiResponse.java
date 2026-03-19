@@ -12,6 +12,7 @@ import lombok.ToString;
  * Provides a consistent structure for success and error cases.
  * @param <T> The type of the response body (payload).
  */
+
 @Getter
 @ToString
 @JsonInclude(JsonInclude.Include.NON_NULL) // Key annotation: will not include null fields in the response JSON.
