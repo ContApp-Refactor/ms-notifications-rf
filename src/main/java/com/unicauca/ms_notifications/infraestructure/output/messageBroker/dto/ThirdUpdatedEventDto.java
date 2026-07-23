@@ -4,6 +4,10 @@ import lombok.Builder;
 import lombok.Getter;
 import lombok.Setter;
 
+/**
+ * @brief Data Transfer Object (DTO) for Third Updated Event.
+ */
+
 @Getter
 @Setter
 @Builder

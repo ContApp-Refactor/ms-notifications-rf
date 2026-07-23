@@ -7,6 +7,10 @@ import org.springframework.web.context.annotation.RequestScope;
 import lombok.Getter;
 import lombok.Setter;
 
+/**
+ * @brief Data Transfer Object (DTO) for Invoice Detail Event.
+ */
+
 @RequestScope
 @Getter
 @Setter

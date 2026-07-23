@@ -6,6 +6,10 @@ import lombok.Getter;
 import lombok.RequiredArgsConstructor;
 import lombok.Setter;
 
+/**
+ * @brief Data Transfer Object (DTO) for Invoice Due Reminder Event.
+ */
+
 @Getter
 @Setter
 @RequiredArgsConstructor

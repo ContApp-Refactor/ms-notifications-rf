@@ -10,6 +10,11 @@ import jakarta.persistence.Id;
 import jakarta.persistence.Table;
 import lombok.Data;
 
+/**
+ * @brief Entity class representing a third party replica.
+ * Maps to the "third_replicas" table in the database.
+ * Contains fields for third party ID, enterprise ID, full name, email, active status, and tenant ID.
+ */
 @Entity
 @Table(name = "third_replicas")
 @Data
