@@ -1,6 +1,6 @@
 services:
   ms-notifications-rf:
-    image: jeserna/ms-notifications-rf:v0.0.27
+    image: jeserna/ms-notifications-rf:v0.0.21
     container_name: ms-notifications-rf
     env_file:
       - ${SECRETS_DIR:-/opt/secrets}/common-configs.env
